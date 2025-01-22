@@ -1,0 +1,770 @@
+@import url("@yaireo/tagify/dist/tagify.css");
+
+:host {
+  contain: strict;
+  display: flow-root;
+  cursor: default;
+  user-select: none;
+  font-family: menu, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  background: rgb(239 239 239 / 100%);
+  letter-spacing: -0.08px;
+  line-height: 18px;
+  color: rgb(139 142 143 / 100%);
+
+  /* Copied from https://github.com/yairEO/tagify/blob/v4.17.7/src/tagify.scss#L4-L8 */
+  --tagify-dd-color-primary: rgb(53 149 246);
+  --tagify-dd-bg-color: rgb(255 255 255);
+  --tagify-dd-item-pad: 0.3em 0.5em;
+}
+
+kbd {
+  display: inline-block;
+  border: 1px solid rgb(204 204 204 / 100%);
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  white-space: nowrap;
+  background-color: rgb(247 247 247 / 100%);
+  color: rgb(51 51 51 / 100%);
+  margin: 0 0.1em;
+  padding: 0.3em 0.8em;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 100%);
+  line-height: 1.4;
+}
+
+table,
+th,
+td {
+  border-collapse: collapse;
+  color: rgb(56 52 48 / 100%);
+}
+
+table {
+  width: 100%;
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+td {
+  padding: 5px;
+}
+
+td:nth-child(odd) {
+  text-align: right;
+  width: 50%;
+}
+
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+
+  /* Preferred icon size */
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizelegibility;
+}
+
+#content {
+  display: flex !important;
+  height: 100%;
+  font-family: Montserrat, sans-serif;
+}
+
+#sidebar {
+  width: 150px;
+  min-width: 100px;
+  padding: 30px 30px 30px 35px;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  background: rgb(242 242 242 / 100%);
+}
+
+#nav-container {
+  padding: 20px 0;
+}
+
+.nav {
+  padding: 7px 0;
+  color: rgb(153 153 153 / 100%);
+  cursor: pointer;
+}
+
+.nav.active {
+  color: rgb(78 191 172 / 100%);
+  cursor: default;
+  position: relative;
+}
+
+.nav.active::before {
+  background: rgb(70 78 90 / 100%);
+  width: 3px;
+  height: 18px;
+  position: absolute;
+  left: -8px;
+  content: "";
+}
+
+/* We don't want to show this in nav item since we have the + button for adding an Organization */
+
+/* stylelint-disable-next-line selector-id-pattern */
+#nav-AddServer {
+  display: none;
+}
+
+#settings-header {
+  font-size: 22px;
+  color: rgb(34 44 49 / 100%);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#settings-container {
+  width: 100%;
+  display: flex;
+  padding: 30px;
+  overflow-y: scroll;
+}
+
+#new-server-container {
+  padding-left: 42px;
+  padding-top: 25px;
+  margin-right: 16px;
+}
+
+.title {
+  font-weight: 500;
+  color: rgb(34 44 49 / 100%);
+}
+
+.page-title {
+  color: rgb(34 44 49 / 100%);
+  font-size: 15px;
+  font-weight: bold;
+  padding: 4px 0 6px;
+}
+
+.add-server-info-row {
+  display: flex;
+  margin: 8px 0 0;
+}
+
+.add-server-info-right {
+  flex-grow: 1;
+  margin-top: 10px;
+}
+
+.sub-title {
+  padding: 4px 0 6px;
+  font-weight: bold;
+  color: rgb(97 97 97 / 100%);
+}
+
+img.server-info-icon {
+  width: 36px;
+  height: 36px;
+  padding: 4px 4px 4px 10px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.server-info-left {
+  margin: 4px 20px 0 0;
+  min-width: 40%;
+}
+
+.server-info-right {
+  margin-top: 4px;
+  width: 55%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.server-info-row {
+  display: inline-block;
+  margin: 5px 0 0;
+}
+
+.server-info-left .server-info-row {
+  display: inline-flex;
+  align-items: inherit;
+  vertical-align: -2px;
+  position: relative;
+}
+
+.server-url {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.server-info-alias {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.server-url-info {
+  margin-right: 10px;
+}
+
+.setting-input-key {
+  font-size: 14px;
+  height: 27px;
+  line-height: 27px;
+  font-weight: bold;
+  background: transparent;
+  flex-wrap: nowrap;
+  margin-right: 10px;
+}
+
+.setting-input-value {
+  flex-grow: 1;
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 13px;
+  border: rgb(237 237 237 / 100%) 2px solid;
+  outline-width: 0;
+  background: transparent;
+  max-width: 450px;
+}
+
+.setting-input-value:focus {
+  border: rgb(78 191 172 / 100%) 2px solid;
+}
+
+.invalid-input-value:focus {
+  border: rgb(239 83 80 / 100%) 2px solid;
+}
+
+.manual-proxy-block {
+  width: 96%;
+}
+
+.actions-container {
+  display: flex;
+  font-size: 14px;
+  color: rgb(35 93 58 / 100%);
+  vertical-align: middle;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  margin-right: 10px;
+}
+
+.action i {
+  margin-right: 5px;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.settings-pane {
+  flex-grow: 1;
+  min-width: 550px;
+}
+
+.action:hover {
+  cursor: pointer;
+}
+
+.action.disabled {
+  color: rgb(153 153 153 / 100%);
+}
+
+.action.disabled:hover {
+  cursor: default;
+}
+
+.settings-card {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 12px 30px;
+  margin: 10px 0 20px;
+  background: rgb(255 255 255 / 100%);
+  width: 80%;
+  transition: all 0.2s;
+}
+
+.settings-card:hover {
+  box-shadow:
+    0 2px 5px 0 rgb(0 0 0 / 16%),
+    0 2px 0 0 rgb(0 0 0 / 12%);
+}
+
+.hidden {
+  display: none;
+  margin: 5px !important;
+}
+
+.red {
+  color: rgb(240 148 148);
+  background: rgb(255 255 255 / 100%);
+  border-radius: 4px;
+  display: inline-block;
+  border: 2px solid rgb(240 148 148);
+  padding: 10px;
+  width: 100px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+.red:hover {
+  background-color: rgb(240 148 148);
+  color: rgb(255 255 255 / 100%);
+}
+
+.green {
+  color: rgb(255 255 255 / 100%);
+  background: rgb(78 191 172 / 100%);
+  border-radius: 4px;
+  display: inline-block;
+  border: none;
+  padding: 10px;
+  width: 100px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+.green:hover {
+  background-color: rgb(60 159 141 / 100%);
+  color: rgb(255 255 255 / 100%);
+}
+
+.w-150 {
+  width: 150px;
+}
+
+.w-250 {
+  width: 250px;
+}
+
+.grey {
+  color: rgb(158 158 158 / 100%);
+  background: rgb(250 250 250 / 100%);
+  border: 1px solid rgb(158 158 158 / 100%);
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 6px;
+}
+
+#note {
+  font-size: 10px;
+}
+
+.code {
+  font-family: "Courier New", Courier, monospace;
+}
+
+i.open-tab-button {
+  padding-left: 5px;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+#css-delete-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  /*
+        .action class will add extra margin to right which
+        we don't want for a button; the extra margin is intended for radio buttons
+    */
+  margin-right: 0;
+}
+
+.selected-css-path,
+.download-folder-path {
+  background: rgb(238 238 238 / 100%);
+  padding: 5px 10px;
+  margin-right: 10px;
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+}
+
+#remove-custom-css {
+  align-items: flex-end;
+}
+
+#server-info-container {
+  /* min-height: calc(100% - 260px); */
+}
+
+#new-org-button {
+  margin: 30px 0;
+}
+
+#create-organization-container {
+  font-size: 1.15em;
+}
+
+#create-organization-container i {
+  position: relative;
+  top: 3px;
+}
+
+#open-create-org-link {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+
+.toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.disallowed:hover {
+  background-color: rgb(241 241 241 / 100%);
+  cursor: not-allowed;
+}
+
+input.toggle-round + label {
+  padding: 2px;
+  width: 50px;
+  height: 25px;
+  background-color: rgb(221 221 221 / 100%);
+  border-radius: 25px;
+}
+
+input.toggle-round + label::before,
+input.toggle-round + label::after {
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  content: "";
+}
+
+input.toggle-round + label::before {
+  background-color: rgb(241 241 241 / 100%);
+  border-radius: 25px;
+  inset: 0;
+}
+
+input.toggle-round + label::after {
+  width: 25px;
+  height: 25px;
+  background-color: rgb(255 255 255 / 100%);
+  border-radius: 100%;
+}
+
+input.toggle-round:checked + label::before {
+  background-color: rgb(78 191 172 / 100%);
+  inset: 0;
+}
+
+input.toggle-round:checked + label::after {
+  margin-left: 25px;
+}
+
+/*  Add new server modal */
+
+.add-server-modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  padding-top: 15vh;
+  left: 0;
+  top: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+
+  /* background: rgba(61, 64, 67, 15); */
+  background: linear-gradient(
+    35deg,
+    rgb(0 59 82 / 100%),
+    rgb(69 181 155 / 100%)
+  );
+  overflow: auto;
+}
+
+/* Modal Content */
+
+.modal-container {
+  background-color: rgb(244 247 248 / 100%);
+  margin: auto;
+  padding: 57px;
+  border: rgb(218 225 227 / 100%) 1px solid;
+  width: 550px;
+  height: 370px;
+  border-radius: 4px;
+}
+
+.add-server-modal .page-title {
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.divider {
+  margin-bottom: 30px;
+  margin-top: 30px;
+  color: rgb(125 135 138 / 100%);
+}
+
+.divider hr {
+  margin-left: 8px;
+  margin-right: 8px;
+  width: 44%;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.server-center {
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  padding-top: 13px;
+  margin-left: -5px;
+}
+
+.server-center button {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  color: rgb(255 255 255 / 100%);
+  background: rgb(78 191 172 / 100%);
+  border: none;
+  width: 98%;
+  height: 46px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.server-center button:hover {
+  background: rgb(50 149 136 / 100%);
+}
+
+.server-center button:focus {
+  background: rgb(50 149 136 / 100%);
+}
+
+.certificates-card {
+  width: 80%;
+}
+
+.certificate-input {
+  width: 100%;
+  margin-top: 10px;
+  display: inline-flex;
+}
+
+.certificate-input div {
+  align-self: center;
+}
+
+.certificate-input .setting-input-value {
+  margin-left: 10px;
+  max-width: 100%;
+}
+
+.tip {
+  background: none;
+  padding: 0;
+}
+
+.tip:hover {
+  box-shadow: none;
+}
+
+.md-14 {
+  font-size: 14px;
+  vertical-align: middle;
+  padding-right: 6px;
+}
+
+#open-hotkeys-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.server-network-option {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  padding-top: 15px;
+  align-items: center;
+  text-align: center;
+  color: rgb(78 191 172);
+  width: 98%;
+  height: 46px;
+  cursor: pointer;
+}
+
+i.open-network-button {
+  font-size: 16px;
+  cursor: pointer;
+  padding-left: 5px;
+  position: absolute;
+}
+
+/* responsive grid */
+@media (width >= 500px) and (width <= 720px) {
+  #new-server-container {
+    padding-left: 0;
+    width: 60vw;
+    padding-right: 4vh;
+  }
+
+  .page-title {
+    width: 60vw;
+  }
+}
+
+@media (width <= 500px) {
+  #new-server-container {
+    padding-left: 0;
+    width: 54%;
+  }
+
+  .page-title {
+    width: 54%;
+  }
+}
+
+@media (width <= 650px) {
+  .selected-css-path,
+  .download-folder-path {
+    margin-right: 15px;
+  }
+
+  #css-delete-action {
+    margin-left: 10px;
+  }
+
+  #css-delete-action span {
+    display: none;
+  }
+}
+
+@media (width <= 720px) {
+  .modal-container {
+    width: 60vw;
+    padding: 40px;
+    min-width: 300px;
+  }
+
+  .server-center button {
+    margin-right: -12px;
+    width: 100%;
+  }
+
+  .divider {
+    margin-right: -8px;
+  }
+
+  .divider hr {
+    margin-left: 6px;
+    margin-right: 6px;
+    width: 43%;
+  }
+}
+
+@media (width <= 600px) {
+  .divider {
+    margin-left: 4%;
+  }
+
+  .divider hr {
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 40%;
+  }
+}
+
+@media (width <= 900px) {
+  .settings-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .server-info-right {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action {
+    margin-top: 10px;
+  }
+}
+
+.lang-menu {
+  font-size: 13px;
+  font-weight: bold;
+  background: rgb(78 191 172 / 100%);
+  width: 100px;
+  height: 38px;
+  color: rgb(255 255 255 / 100%);
+  border-color: rgb(0 0 0 / 0%);
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.tagify__input {
+  min-width: 130px !important;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.tagify__input::before {
+  top: 0;
+  bottom: 0;
+}
+
+.settings-tagify-dropdown {
+  position: relative;
+  z-index: 9999;
+  height: 0;
+}

@@ -1,0 +1,486 @@
+/*******************
+ *  General rules  *
+ *******************/
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  cursor: default;
+  user-select: none;
+}
+
+#content {
+  display: flex;
+  height: 100%;
+}
+
+.toggle-sidebar {
+  background: rgb(34 44 49 / 100%);
+  width: 54px;
+  padding: 27px 0 20px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  -webkit-app-region: drag;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+
+.toggle-sidebar div {
+  transition: all 0.5s ease-out;
+}
+
+.sidebar-hide {
+  width: 0;
+  transition: all 0.8s ease;
+}
+
+.sidebar-hide div {
+  transform: translateX(-100%);
+  transition: all 0.6s ease-out;
+}
+
+#view-controls-container {
+  height: calc(100% - 208px);
+  scrollbar-gutter: stable both-edges;
+  overflow-y: hidden;
+}
+
+#view-controls-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+#view-controls-container::-webkit-scrollbar-track {
+  background-color: rgb(0 0 0 / 30%);
+}
+
+#view-controls-container::-webkit-scrollbar-thumb {
+  background-color: rgb(169 169 169 / 100%);
+}
+
+#view-controls-container:hover {
+  overflow-y: scroll;
+}
+
+/*******************
+  *   Left Sidebar  *
+  *******************/
+
+#tabs-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+
+  /* Preferred icon size */
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizelegibility;
+}
+
+#actions-container {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+}
+
+.action-button {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.action-button:hover {
+  cursor: pointer;
+}
+
+.action-button i {
+  color: rgb(108 133 146 / 100%);
+  font-size: 28px;
+}
+
+.action-button:hover i {
+  color: rgb(152 169 179 / 100%);
+}
+
+.action-button.active {
+  /* background-color: rgba(255, 255, 255, 0.25); */
+  background-color: rgb(239 239 239 / 100%);
+  opacity: 0.9;
+  padding-right: 14px;
+}
+
+.action-button.active i {
+  color: rgb(28 38 43 / 100%);
+}
+
+.action-button.disable {
+  opacity: 0.6;
+}
+
+.action-button.disable:hover {
+  cursor: not-allowed;
+}
+
+.action-button.disable:hover i {
+  color: rgb(108 133 146 / 100%);
+}
+
+.tab {
+  position: relative;
+  margin: 2px 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.tab:first-child {
+  margin-top: 9px;
+}
+
+.tab .server-icons {
+  width: 35px;
+  vertical-align: top;
+  border-radius: 4px;
+}
+
+.tab .server-tab {
+  width: 100%;
+  height: 35px;
+  position: relative;
+  margin-top: 5px;
+  z-index: 11;
+  line-height: 31px;
+  color: rgb(238 238 238 / 100%);
+  text-align: center;
+  overflow: hidden;
+  opacity: 0.6;
+  padding: 6px 0;
+}
+
+.server-tab .alt-icon {
+  font-family: Verdana, sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  border: 2px solid rgb(34 44 49 / 100%);
+  margin-left: 17%;
+  width: 35px;
+  border-radius: 4px;
+}
+
+.tab .server-tab:hover {
+  opacity: 0.8;
+}
+
+.tab.active .server-tab {
+  opacity: 1;
+  background-color: rgb(100 132 120 / 100%);
+}
+
+.tab.functional-tab {
+  height: 46px;
+  padding: 0;
+}
+
+.tab.functional-tab.active .server-tab {
+  padding: 2px 0;
+  height: 40px;
+  background-color: rgb(255 255 255 / 25%);
+}
+
+.tab.functional-tab .server-tab i {
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.tab .server-tab-badge.active {
+  border-radius: 9px;
+  min-width: 11px;
+  padding: 0 3px;
+  height: 17px;
+  background-color: rgb(244 67 54 / 100%);
+  font-size: 10px;
+  font-family: sans-serif;
+  position: absolute;
+  z-index: 15;
+  top: 6px;
+  float: right;
+  color: rgb(255 255 255 / 100%);
+  text-align: center;
+  line-height: 17px;
+  display: block;
+  right: 0;
+}
+
+.tab .server-tab-badge {
+  display: none;
+}
+
+.tab .server-tab-badge.close-button {
+  width: 16px;
+  padding: 0;
+}
+
+.tab .server-tab-badge.close-button i {
+  font-size: 13px;
+  line-height: 17px;
+}
+
+#add-tab {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tab .server-tab-shortcut {
+  color: rgb(100 132 120 / 100%);
+  font-size: 12px;
+  text-align: center;
+  font-family: sans-serif;
+  margin-bottom: 5px;
+}
+
+.refresh {
+  animation: rotate-loader 1s linear infinite;
+}
+
+@keyframes rotate-loader {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/*******************
+  *   Webview Area  *
+  *******************/
+
+#webviews-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+/* Pseudo element for loading indicator */
+#webviews-container::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+
+  /* Spinner is released under loading.io free License: https://loading.io/license/#free-license */
+  background: rgb(255 255 255 / 100%) url("../img/ic_loading.svg") no-repeat;
+  background-size: 60px 60px;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* When the active webview is loaded */
+#webviews-container.loaded::before {
+  z-index: -1;
+  visibility: hidden;
+}
+
+.webview-pane,
+.functional-view {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  visibility: hidden;
+}
+
+.webview-pane {
+  display: flex;
+  flex-direction: column;
+}
+
+.webview-pane > webview {
+  flex: 1;
+}
+
+.webview-pane.active,
+.functional-view.active {
+  z-index: 1;
+  visibility: visible;
+}
+
+webview.focus {
+  outline: 0 solid transparent;
+}
+
+.webview-unsupported {
+  background: rgb(254 243 199);
+  border: 1px solid rgb(253 230 138);
+  color: rgb(69 26 3);
+  font-family: system-ui;
+  font-size: 14px;
+  display: flex;
+}
+
+.webview-unsupported[hidden] {
+  display: none;
+}
+
+.webview-unsupported-message {
+  padding: 0.3em;
+  flex: 1;
+  text-align: center;
+}
+
+.webview-unsupported-dismiss {
+  padding: 0.3em;
+  cursor: pointer;
+}
+
+/* Tooltip styling */
+
+#loading-tooltip,
+#dnd-tooltip,
+#back-tooltip,
+#reload-tooltip,
+#setting-tooltip {
+  font-family: sans-serif;
+  background: rgb(34 44 49 / 100%);
+  margin-left: 48px;
+  padding: 6px 8px;
+  position: absolute;
+  margin-top: 0;
+  z-index: 1000;
+  color: rgb(255 255 255 / 100%);
+  border-radius: 4px;
+  text-align: center;
+  width: 55px;
+  font-size: 14px;
+}
+
+#loading-tooltip::after,
+#dnd-tooltip::after,
+#back-tooltip::after,
+#reload-tooltip::after,
+#setting-tooltip::after {
+  content: " ";
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid rgb(34 44 49 / 100%);
+  position: absolute;
+  top: 7px;
+  right: 68px;
+}
+
+#add-server-tooltip,
+.server-tooltip {
+  font-family: arial, sans-serif;
+  background: rgb(34 44 49 / 100%);
+  left: 56px;
+  padding: 10px 20px;
+  position: fixed;
+  margin-top: 11px;
+  z-index: 5000 !important;
+  color: rgb(255 255 255 / 100%);
+  border-radius: 4px;
+  text-align: center;
+  width: max-content;
+  font-size: 14px;
+}
+
+#add-server-tooltip::after,
+.server-tooltip::after {
+  content: " ";
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid rgb(34 44 49 / 100%);
+  position: absolute;
+  top: 10px;
+  left: -5px;
+}
+
+#collapse-button {
+  bottom: 30px;
+  left: 20px;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: rgb(34 44 49 / 100%);
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: rgb(153 153 153 / 100%) 1px 1px;
+}
+
+#collapse-button i {
+  color: rgb(239 239 239 / 100%);
+}
+
+#main-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Full screen Popup container  */
+
+.popup .popuptext {
+  visibility: hidden;
+  background-color: rgb(85 85 85 / 100%);
+  color: rgb(255 255 255 / 100%);
+  text-align: center;
+  border-radius: 6px;
+  padding: 9px 0;
+  position: absolute;
+  z-index: 1000;
+  font-family: arial, sans-serif;
+  width: 240px;
+  top: 15px;
+  height: 20px;
+  left: 43%;
+}
+
+.popup .show {
+  visibility: visible;
+  animation: full-screen-popup 0s ease-in 1s forwards;
+  animation-fill-mode: forwards;
+}
+
+@keyframes full-screen-popup {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 1;
+  }
+}
